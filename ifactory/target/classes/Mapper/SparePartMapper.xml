@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ifactory.module.deviceManager.mapper.SparePartMapper">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sparePart` (`id`,`name`,`type`,`specificationModel`,`number`,`price`)
+        VALUES (#{id},#{name},#{type},#{specificationModel},#{number},#{price});
+    </insert>
+    
+    <update id="update" parameterType="SparePartExample">
+        UPDATE `sparePart` s
+        	<set>
+            	<if test="name!=null">
+            		s.`name` = #{name}
+            	</if>
+            	<if test="type!=null">
+            		s.`type` = #{type}
+            	</if>
+            	<if test="specificationModel!=null">
+            		s.`specificationModel` = #{specificationModel}
+            	</if>
+            	<if test="number!=null">
+            		s.`number` = #{number}
+            	</if>
+            	<if test="price!=null">
+            		s.`price` = #{price}
+            	</if>
+        	</set>
+        WHERE s.`id` = #{id}
+    </update>
+    
+    <delete id="delete">
+    	DELETE FROM `sparePart` WHERE `id = #{id}
+    </delete>
+    
+    <select id="select" resultType="SparePartExample">
+    	SELECT 
+    		`id`,
+    		`name`,
+    		`type`,
+    		`specificationModel`,
+    		`number`,
+    		`price`
+    	FROM `sparePart` s
+    	
+    	WHERE 1=1
+    	
+    	<if test="id!=null">
+            AND s.`id` = #{id}
+        </if>
+        
+        <if test="name!=null">
+            AND s.`name` = #{name}
+        </if>
+        
+        <if test="type!=null">
+            AND s.`type` = #{type}
+        </if>
+        
+        <if test="specificationModel!=null">
+            AND s.`specificationModel` = #{specificationModel}
+        </if>
+    	
+    	<if test="number!=null">
+            AND s.`number` = #{number}
+        </if>
+        
+        <if test="price!=null">
+            AND s.`price` = #{price}
+        </if>
+    	
+    </select>
+    
+    <select id="selects" resultType="SparePartExample">
+    	SELECT 
+    		`id`,
+    		`name`,
+    		`type`,
+    		`specificationModel`,
+    		`number`,
+    		`price`
+    	FROM `sparePart` s
+    	
+    	WHERE 1=1
+    	
+    	<if test="id!=null">
+            AND s.`id` = #{id}
+        </if>
+        
+        <if test="name!=null">
+            AND s.`name` = #{name}
+        </if>
+        
+        <if test="type!=null">
+            AND s.`type` = #{type}
+        </if>
+        
+        <if test="specificationModel!=null">
+            AND s.`specificationModel` = #{specificationModel}
+        </if>
+    	
+    	<if test="number!=null">
+            AND s.`number` = #{number}
+        </if>
+        
+        <if test="price!=null">
+            AND s.`price` = #{price}
+        </if>
+    	
+    </select>
+
+</mapper>

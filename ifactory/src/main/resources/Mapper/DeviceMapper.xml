@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ifactory.module.deviceManager.mapper.DeviceMapper">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `device` (`id`,`companyCode`,`name`,`workshop`,`type`,`number`,`specificationModel`,`originalValue`,`productionTime`,`manufacturerName`,`contacts`,`contactInformation`,`guardian`,`status`)
+        VALUES (#{id},#{companyCode},#{name},#{workshop},#{type},#{number},#{specificationModel},#{originalValue},#{productionTime},#{manufacturerName},#{contacts},#{contactInformation},#{guardian},#{status});
+    </insert>
+    
+    <update id="update" parameterType="DeviceExample">
+        UPDATE `device` d
+        	<set>
+            	<if test="companyCode!=null">
+            		d.`companyCode` = #{companyCode}
+            	</if>
+            	<if test="name">
+            		d.`name` = #{name}
+            	</if>
+            	<if test="workshop!=null">
+            		d.`workshop` = #{workshop}
+            	</if>
+            	<if test="type!=null">
+            		d.`type` = #{type}
+            	</if>
+            	<if test="number!=null">
+            		d.`number` = #{number}
+            	</if>
+            	<if test="specificationModel!=null">
+            		d.`specificationModel` = #{specificationModel}
+            	</if>
+            	<if test="originalValue!=null">
+            		d.`originalValue` = #{originalValue}
+            	</if>
+            	<if test="productionTime!=null">
+            		d.`productionTime` = #{productionTime}
+            	</if>
+            	<if test="manufacturerName!=null">
+            		d.`manufacturerName` = #{manufacturerName}
+            	</if>
+            	<if test="contacts!=null">
+            		d.`contacts` = #{contacts}
+            	</if>
+            	<if test="contactInformation!=null">
+            		d.`contactInformation` = #{contactInformation}
+            	</if>
+            	<if test="guardian!=null">
+            		d.`guardian` = #{guardian}
+            	</if>
+            	<if test="status!=null">
+            		d.`status` = #{status}
+            	</if>
+        	</set>
+        WHERE d.`id` = #{id}
+    </update>
+    
+    <delete id="delete">
+    	DELETE FROM `device`
+    	
+    	WHERE `id = #{id}
+    </delete>
+    
+    <select id="select" resultType="DeviceExample">
+    	SELECT 
+    		`id`,
+    		`companyCode`,
+    		`name`,
+    		`workshop`,
+    		`type`,
+    		`number`,
+    		`specificationModel`,
+    		`originalValue`,
+    		`productionTime`,
+    		`manufacturerName`,
+    		`contacts`,
+    		`contactInformation`,
+    		`guardian`,
+    		`status`
+    	FROM `device` d
+    	
+    	WHERE 1=1
+    	
+    	<if test="status!=null">
+            AND d.`status` = #{status}
+        </if>
+        
+        <if test="companyCode!=null">
+            AND d.`companyCode` = #{companyCode}
+        </if>
+        
+        <if test="workshop!=null">
+            AND d.`workshop` = #{workshop}
+        </if>
+        
+        <if test="type!=null">
+            AND d.`type` = #{type}
+        </if>
+    	
+    	<if test="number!=null">
+            AND d.`number` = #{number}
+        </if>
+    	
+    </select>
+    
+    <select id="statusDisplay" resultType="StateStatisticsExample">
+    	SELECT 
+    		 count(1) AS atotal,
+    	
+    		 SUM( CASE WHEN status=1 THEN 1 ELSE 0 END ) AS sum1,
+    		 
+    		 SUM( CASE WHEN status=2 THEN 1 ELSE 0 END ) AS sum2
+    		 
+    	FROM `device` d
+    	
+    </select>
+    
+    <select id="selects" resultType="DeviceExample">
+    	SELECT 
+    		`id`,
+    		`companyCode`,
+    		`name`,
+    		`workshop`,
+    		`type`,
+    		`number`,
+    		`specificationModel`,
+    		`originalValue`,
+    		`productionTime`,
+    		`manufacturerName`,
+    		`contacts`,
+    		`contactInformation`,
+    		`guardian`,
+    		`status`
+    	FROM `device` d
+    	
+    	WHERE 1=1
+    	
+    	<if test="status!=null">
+            AND d.`status` = #{status}
+        </if>
+        
+        <if test="companyCode!=null">
+            AND d.`companyCode` = #{companyCode}
+        </if>
+        
+        <if test="workshop!=null">
+            AND d.`workshop` = #{workshop}
+        </if>
+        
+        <if test="type!=null">
+            AND d.`type` = #{type}
+        </if>
+    	
+    	<if test="number!=null">
+            AND d.`number` = #{number}
+        </if>
+    
+    </select>
+
+
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ifactory.module.login.LoginMapper">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `user` (`factoryCode`,`username`,`password`,`jobNumber`,`post`) VALUES (#{factoryCode},#{username},#{password},#{jobNumber},#{post});
+	</insert>
+	
+	<delete id="delete">
+        DELETE FROM `user`
+        WHERE `id` = #{id};
+    </delete>
+	
+	<update id="update">
+		UPDATE `user`
+        <set>
+            <if test="factoryCode != null">
+                factoryCode = #{factoryCode},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="jobNumber != null">
+                jobNumber = #{jobNumber},
+            </if>
+            <if test="post != null">
+                post = #{post},
+            </if>
+        </set>
+        WHERE `id` = #{id}
+	</update>
+	
+	<select id="select" resultType="User">
+		SELECT
+        id,        
+        factoryCode,
+        username,
+        password,
+        jobNumber,
+        post
+        FROM `user` WHERE 1 == 1
+        <if test="id != null">
+			`id` = #{id}
+		</if>
+		<if test="factoryCode != null">
+			`factoryCode` = #{factoryCode}
+		</if>
+		<if test="username != null">
+			`username` = #{username}
+		</if>  
+		<if test="jobNumber != null">
+			`jobNumber` = #{jobNumber}
+		</if>         
+ 
+    </select>
+
+</mapper>

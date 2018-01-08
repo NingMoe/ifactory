@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ifactory.module.deviceManager.mapper.DeviceMaintainMapper">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `deviceMiantain` (`id`,`dId`,`maintainContent`,`maintainCosts`,`maintainTime`,`maintainPerson`)
+        VALUES (#{id},#{dId},#{maintainContent},#{maintainCosts},#{maintainTime},#{maintainPerson});
+    </insert>
+    
+    <update id="update" parameterType="DeviceMaintainExample">
+        UPDATE `deviceMiantain` d
+        	<set>
+            	<if test="dId!=null">
+            		d.`dId` = #{dId}
+            	</if>
+            	<if test="maintainContent!=null">
+            		d.`maintainContent` = #{maintainContent}
+            	</if>
+            	<if test="maintainCosts!=null">
+            		d.`maintainCosts` = #{maintainCosts}
+            	</if>
+            	<if test="maintainTime!=null">
+            		d.`maintainTime` = #{maintainTime}
+            	</if>
+            	<if test="maintainPerson!=null">
+            		d.`maintainPerson` = #{maintainPerson}
+            	</if>
+        	</set>
+        WHERE d.`id` = #{id}
+    </update>
+    
+    <delete id="delete">
+    	DELETE FROM `deviceMiantain` WHERE `id = #{id}
+    </delete>
+    
+    <select id="selects" resultType="DeviceMaintainExample">
+    	SELECT 
+    		`id`,
+    		`dId`,
+    		`maintainContent`,
+    		`maintainCosts`,
+    		`maintainTime`,
+    		`maintainPerson`
+    	FROM `deviceMiantain` d
+    	
+    	WHERE 1=1
+    	
+    	<if test="id!=null">
+            AND d.`id` = #{id}
+        </if>
+        
+        <if test="dId!=null">
+            AND d.`dId` = #{dId}
+        </if>
+        
+        <if test="maintainContent!=null">
+            AND d.`maintainContent` = #{maintainContent}
+        </if>
+        
+        <if test="maintainCosts!=null">
+            AND d.`maintainCosts` = #{maintainCosts}
+        </if>
+    	
+    	<if test="maintainTime!=null">
+            AND d.`maintainTime` = #{maintainTime}
+        </if>
+        
+        <if test="maintainPerson!=null">
+            AND d.`maintainPerson` = #{maintainPerson}
+        </if>
+        
+        ORDER BY d.`maintainTime` ASC
+    
+    </select>
+
+</mapper>

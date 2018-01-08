@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ifactory.module.deviceManager.mapper.MyEquipmentMapper">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `myEquipment` (`id`,`userId`,`dId`)
+        VALUES (#{id},#{userId},#{dId});
+    </insert>
+    
+    <update id="update" parameterType="MyEquipmentExample">
+        UPDATE `myEquipment` m
+        	<set>
+            	<if test="userId!=null">
+            		m.`userId` = #{userId}
+            	</if>
+            	<if test="dId!=null">
+            		m.`dId` = #{dId}
+            	</if>
+        	</set>
+        WHERE m.`id` = #{id}
+    </update>
+    
+    <delete id="delete">
+    	DELETE FROM `myEquipment` WHERE `id = #{id}
+    </delete>
+    
+    <select id="statusDisplay" resultType="StateStatisticsExample">
+    	SELECT 
+    		count(1) AS m.atotal,
+    	
+    		SUM( CASE WHEN m.status=1 THEN 1 ELSE 0 END ) AS sum1,
+    		 
+    		SUM( CASE WHEN m.status=2 THEN 1 ELSE 0 END ) AS sum2
+    	FROM `myEquipment` m
+    	
+    	LEFT JOIN `device` d ON d.`id` = m.`dId`
+    	
+    	WHERE m.`userId` = #{userId}
+    
+    </select>
+    
+    <select id="select" resultMap="MyEquipmentExampleMap">
+    	SELECT 
+    		m.`id`,
+    		m.`userId`,
+    		m.`dId`,
+    		d.`id` AS d_id,
+    		d.`companyCode` AS d_name,
+    		d.`name` AS d_companyCode,
+    		d.`workshop` AS d_workshop,
+    		d.`type` AS d_type,
+    		d.`number`　AS d_number,
+    		d.`specificationModel` AS d_specificationModel,
+    		d.`originalValue` AS ,
+    		d.`productionTime`,
+    		d.`manufacturerName`,
+    		d.`contacts`,
+    		d.`contactInformation`,
+    		d.`guardian`,
+    		d.`status`
+    	FROM `myEquipment` m
+    	
+    	LEFT JOIN `device` d ON d.`id` = m.`dId`
+    	
+    	WHERE 1=1
+    	
+    	<if test="userId!=null">
+            AND m.`userId` = #{userId}
+        </if>
+    	
+    </select>
+    
+    
+    <select id="selects" resultMap="MyEquipmentExampleMap">
+    	SELECT 
+    		m.`id`,
+    		m.`userId`,
+    		m.`dId`,
+    		d.`id` AS d_id,
+    		d.`companyCode` AS d_name,
+    		d.`name` AS d_companyCode,
+    		d.`workshop` AS d_workshop,
+    		d.`type` AS d_type,
+    		d.`number`　AS d_number,
+    		d.`specificationModel` AS d_specificationModel,
+    		d.`originalValue` AS ,
+    		d.`productionTime`,
+    		d.`manufacturerName`,
+    		d.`contacts`,
+    		d.`contactInformation`,
+    		d.`guardian`,
+    		d.`status`
+    	FROM `myEquipment` m
+    	
+    	LEFT JOIN `device` d ON d.`id` = m.`dId`
+    	
+    	WHERE 1=1
+    	
+    	<if test="userId!=null">
+            AND m.`userId` = #{userId}
+        </if>
+    	
+    </select>
+    
+    <resultMap type="MyEquipmentExample" id="MyEquipmentExampleMap">
+        <result	column="id"					property="id"				        javaType="int"/>
+        <result	column="userId"					    property="userId"				            javaType="int"/>
+        <result	column="dId"					    property="dId"				            javaType="int"/>
+        <association property="DeviceExample" javaType="ifactory.module.deviceManager.entity.DeviceExample">
+        	<result	column="d_id"					property="id"				        javaType="int"/>
+        	<result	column="d_name"					property="name"				        javaType="String"/>
+        	<result	column="d_companyCode"					property="companyCode"				        javaType="String"/>
+        	<result	column="d_workshop"					property="workshop"				        javaType="String"/>
+        	<result	column="d_type"					property="type"				        javaType="String"/>
+        	<result	column="d_number"					property="number"				        javaType="String"/>
+        	<result	column="d_specificationModel"					property="specificationModel"				        javaType="String"/>
+        	<result	column="d_originalValue"					property="originalValue"				        javaType="int"/>
+        	<result	column="d_productionTime"					property="productionTime"				        javaType="java.util.Date"/>
+        	<result	column="d_manufacturerName"					property="manufacturerName"				        javaType="String"/>
+        	<result	column="d_contacts"					property="contacts"				        javaType="String"/>
+        	<result	column="d_contactInformation"					property="contactInformation"				        javaType="String"/>
+        	<result	column="d_guardian"					property="guardian"				        javaType="String"/>
+        	<result	column="d_status"					property="status"				        javaType="int"/>
+        </association>
+    </resultMap>
+</mapper>
